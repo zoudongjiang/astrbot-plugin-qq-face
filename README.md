@@ -1,6 +1,7 @@
 # astrbot_plugin_qq_face
 
-让 AstrBot 机器人真正读懂、并能发出 QQ 原生小黄脸（OneBot v11 `face` 消息段）的插件。
+让 AstrBot 机器人读懂用户的QQ表情、并能自己发出 QQ 原生小黄脸（OneBot v11 `face` 消息段）的插件。
+
 
 很多机器人只能把 `[CQ:face,id=14]` 当成一行字发出去，也看不懂用户发来的表情。这个插件补上了两件事：
 
@@ -126,3 +127,6 @@ python tests/test_send_path.py         # 发送链路（用轻量替身模拟 As
 ```
 
 两个脚本不依赖 AstrBot 运行环境，改完逻辑可以直接跑。
+
+## 如果有问题
+目前插件主要在 SnowLuma 环境下验证。有问题可以给我提issue或者联系我QQ874417699（但可能忙不一定注意）
