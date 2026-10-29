@@ -1,8 +1,8 @@
 name: astrbot_plugin_qq_face
 display_name: QQ 原生表情
-desc: 让机器人看懂并真的发出 QQ 小黄脸：方案化表情、别名、按频率把强要求提示词注入到本轮对话，支持 &#表情名#&。
+desc: 让机器人看懂用户的QQ表情，并且自己也能发出 QQ 小黄脸：方案化表情、别名、按频率把强要求提示词注入到本轮对话。
 version: 0.7.0
-author: dsh
+author: zoudongjiang
 astrbot_version: ">=4.17.0"
 tags:
   - QQ
