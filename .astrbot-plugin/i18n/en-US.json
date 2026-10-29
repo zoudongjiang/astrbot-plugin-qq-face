@@ -1,0 +1,8 @@
+{
+  "views": {
+    "face-settings": {
+      "title": "QQ Faces",
+      "description": "Choose which QQ faces the bot may send, and how often."
+    }
+  }
+}

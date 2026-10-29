@@ -1,0 +1,8 @@
+{
+  "views": {
+    "face-settings": {
+      "title": "QQ 表情配置",
+      "description": "管理机器人能发哪些小黄脸、别名与出现频率。"
+    }
+  }
+}

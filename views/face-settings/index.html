@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QQ 表情配置</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <div>
+          <h1>QQ 表情配置</h1>
+          <p class="sub">决定机器人能发哪些小黄脸、多久被允许发一次，以及怎么提示它。</p>
+        </div>
+        <label class="switch">
+          <input id="enabled" type="checkbox" />
+          <span class="track"><span class="dot"></span></span>
+          <span id="enabledLabel">启用</span>
+        </label>
+      </header>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>触发方式</h2>
+        </div>
+        <div class="modes">
+          <label class="mode">
+            <input id="modePrompt" type="radio" name="mode" value="prompt" />
+            <span>
+              <b>提示词</b>
+              <small>按频率注入提示词，告诉模型这一轮最多发几个、怎么写、有哪些可选。</small>
+            </span>
+          </label>
+          <label class="mode disabled" title="敬请期待">
+            <input id="modeEmotion" type="radio" name="mode" value="emotion" disabled />
+            <span>
+              <b>情感识别 <em>敬请期待</em></b>
+              <small>根据情绪自动配表情，不需要模型自己写标记。</small>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>表情方案</h2>
+          <span id="schemeHint" class="hint"></span>
+        </div>
+        <div class="scheme-bar">
+          <select id="schemeSelect"></select>
+          <input id="schemeName" maxlength="24" placeholder="方案名称" />
+          <button id="schemeAdd" class="ghost" type="button">新建</button>
+          <button id="schemeDelete" class="ghost" type="button">删除</button>
+        </div>
+        <div class="row wrap">
+          <span class="hint">已选 <b id="selectedCount">0</b> 个 · 点表情可添加/取消</span>
+          <button id="selectAll" class="ghost" type="button">全选</button>
+          <button id="selectNone" class="ghost" type="button">全不选</button>
+          <label class="check">
+            <input id="allowOutside" type="checkbox" />
+            允许方案外表情（目录里存在就放行）
+          </label>
+          <span id="catalogHint" class="hint"></span>
+          <button id="refresh" class="ghost" type="button">刷新目录</button>
+        </div>
+        <div id="packs" class="packs"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>别名</h2>
+          <span class="hint">给表情起个更准确的名字，AI 会用它来理解和发送</span>
+        </div>
+        <div id="aliases" class="aliases"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>提示词</h2>
+          <button id="promptReset" class="ghost" type="button">恢复默认</button>
+        </div>
+        <div class="modes">
+          <label class="mode compact">
+            <input id="faceModeAll" type="radio" name="faceMode" value="all" />
+            <span><b>全部注入</b><small>把方案里所有表情都列给模型，信息完整但更占 token。</small></span>
+          </label>
+          <label class="mode compact">
+            <input id="faceModeRandom" type="radio" name="faceMode" value="random" />
+            <span>
+              <b>随机注入 <input id="faceCount" class="num" type="number" min="1" max="200" /> 个</b>
+              <small>每轮从方案里随机抽 N 个，增加变化。</small>
+            </span>
+          </label>
+        </div>
+        <textarea id="prompt" rows="8" spellcheck="false"></textarea>
+        <p class="hint">
+          变量：<code>{max}</code> 每条上限、<code>{faces}</code> 表情列表、<code>{packs}</code>
+          方案名。留空保存即恢复默认。
+        </p>
+        <div class="preview-head">
+          <span class="hint">预览（当前设置下会注入的内容）</span>
+        </div>
+        <pre id="promptPreview" class="preview">—</pre>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>出现频率</h2>
+          <span id="enabledCount" class="pill">—</span>
+        </div>
+        <div class="grid">
+          <label class="field">
+            <span class="label">每轮触发概率 <b id="probabilityValue">50%</b></span>
+            <input id="probability" type="range" min="0" max="100" step="5" />
+          </label>
+          <label class="field">
+            <span class="label">每次最多发 <b id="maxValue">2</b> 个</span>
+            <input id="max_per_reply" type="range" min="0" max="5" step="1" />
+          </label>
+          <label class="field">
+            <span class="label">冷却 <b id="cooldownValue">30</b> 秒</span>
+            <input id="cooldown_seconds" type="range" min="0" max="300" step="5" />
+          </label>
+          <label class="field">
+            <span class="label">每小时上限 <b id="hourlyValue">40</b>（0 为不限）</span>
+            <input id="hourly_limit" type="range" min="0" max="200" step="10" />
+          </label>
+        </div>
+        <p class="hint">概率命中的那一轮才会注入提示词；冷却和每小时上限是全局闸门。</p>
+      </section>
+
+      <footer class="bar">
+        <span id="stats" class="hint"></span>
+        <div class="row">
+          <button id="reset" class="ghost" type="button">恢复默认</button>
+          <button id="save" class="primary" type="button">保存</button>
+        </div>
+      </footer>
+    </main>
+    <div id="toast" class="toast" hidden></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
